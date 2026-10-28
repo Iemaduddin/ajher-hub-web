@@ -1,0 +1,356 @@
+@import 'tailwindcss';
+
+/* ============================================================
+   Octo Code design tokens — sesuai DESIGN.md (dark-first)
+   ============================================================ */
+@theme {
+  --color-primary: #2f81f7;
+  --color-primary-hover: #388bfd;
+  --color-secondary: #238636;
+  --color-secondary-hover: #2ea043;
+  --color-neutral: #8b949e;
+
+  --color-canvas: #0d1117;
+  --color-surface: #161b22;
+  --color-raised: #1c2128;
+  --color-overlay: #21262d;
+
+  --color-fg: #e6edf3;
+  --color-sub: #8b949e;
+  --color-dim: #484f58;
+  --color-link: #58a6ff;
+
+  --color-line: #30363d;
+  --color-line-muted: #21262d;
+  --color-line-hover: #484f58;
+
+  --color-success: #3fb950;
+  --color-warning: #d29922;
+  --color-error: #f85149;
+  --color-accent: #f78166;
+
+  --color-outline: #c9d1d9;
+  --color-on-primary: #ffffff;
+  --color-backdrop: rgba(1, 4, 9, 0.8);
+
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Consolas, monospace;
+
+  --text-3xl: 32px;
+  --text-4xl: 48px;
+
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-lg: 12px;
+  --radius-xl: 20px;
+  --radius-pill: 9999px;
+
+  --shadow-sticky: 0 1px 0 rgba(27, 31, 36, 0.04);
+  --shadow-pop: 0 8px 24px rgba(1, 4, 9, 0.5);
+
+  --animate-modal-in: modal-in 150ms ease;
+  --animate-dropdown-in: dropdown-in 100ms ease;
+
+  @keyframes modal-in {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes dropdown-in {
+    from {
+      opacity: 0;
+      transform: translateY(-2px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Light mode — sekunder (DESIGN.md: dark adalah default) */
+:root[data-theme='light'] {
+  --color-primary: #0969da;
+  --color-primary-hover: #0860c4;
+  --color-secondary: #1f883d;
+  --color-secondary-hover: #1a7f37;
+  --color-neutral: #6e7781;
+
+  --color-canvas: #ffffff;
+  --color-surface: #f6f8fa;
+  --color-raised: #ffffff;
+  --color-overlay: #ffffff;
+
+  --color-fg: #1f2328;
+  --color-sub: #59636e;
+  --color-dim: #818b98;
+  --color-link: #0969da;
+
+  --color-line: #d1d9e0;
+  --color-line-muted: #d8dee4;
+  --color-line-hover: #b1bac4;
+
+  --color-success: #1a7f37;
+  --color-warning: #9a6700;
+  --color-error: #cf222e;
+  --color-accent: #bc4c00;
+
+  --color-outline: #24292f;
+  --color-backdrop: rgba(31, 35, 40, 0.5);
+
+  --shadow-sticky: 0 1px 0 rgba(31, 35, 40, 0.06);
+  --shadow-pop: 0 8px 24px rgba(31, 35, 40, 0.18);
+
+  color-scheme: light;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+/* Container max-width (DESIGN.md: 1280 / 1012 / 768) */
+@utility container-wide {
+  width: 100%;
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+@utility container-readable {
+  width: 100%;
+  max-width: 1012px;
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+@utility container-narrow {
+  width: 100%;
+  max-width: 768px;
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    border-color: var(--color-line);
+  }
+
+  html,
+  body,
+  #root {
+    min-height: 100%;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-canvas);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    color: var(--color-fg);
+  }
+
+  h1 {
+    font-size: 32px;
+  }
+  h2 {
+    font-size: 24px;
+  }
+  h3 {
+    font-size: 20px;
+  }
+  h4 {
+    font-size: 16px;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    color: var(--color-link);
+    text-decoration: none;
+    transition: color 100ms ease;
+  }
+
+  a:hover {
+    color: var(--color-primary-hover);
+  }
+
+  code,
+  kbd,
+  pre,
+  samp {
+    font-family: var(--font-mono);
+    font-size: 90%;
+    font-variant-ligatures: contextual;
+  }
+
+  code {
+    padding: 2px 6px;
+    border-radius: 3px;
+    background-color: var(--color-raised);
+    color: var(--color-fg);
+  }
+
+  kbd {
+    display: inline-block;
+    min-width: 18px;
+    padding: 1px 6px;
+    border: 1px solid var(--color-line);
+    border-radius: 3px;
+    background-color: var(--color-canvas);
+    color: var(--color-sub);
+    font-size: 12px;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  img,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+    color: inherit;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  ul,
+  ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  hr {
+    height: 1px;
+    margin: 0;
+    border: 0;
+    background-color: var(--color-line);
+  }
+
+  ::selection {
+    background-color: rgba(47, 129, 247, 0.35);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-line) transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    border: 2px solid transparent;
+    border-radius: 9999px;
+    background-color: var(--color-line);
+    background-clip: content-box;
+  }
+
+  *::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+}
+
+/* ============================================================
+   Komponen shared yang tak bisa diekspresikan dengan utility
+   ============================================================ */
+@layer components {
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-fg);
+  }
+
+  .brand:hover {
+    color: var(--color-fg);
+  }
+
+  .brand-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background-color: var(--color-secondary);
+    color: #ffffff;
+  }
+
+  .brand-name {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .brand-name-accent {
+    color: var(--color-link);
+  }
+
+  .tooltip-arrow::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border: 5px solid transparent;
+    transform: translateX(-50%);
+  }
+
+  .tooltip-top .tooltip-arrow::after {
+    top: 100%;
+    border-top-color: var(--color-overlay);
+  }
+
+  .tooltip-bottom .tooltip-arrow::after {
+    bottom: 100%;
+    border-bottom-color: var(--color-overlay);
+  }
+}
